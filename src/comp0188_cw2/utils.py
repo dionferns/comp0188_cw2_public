@@ -1,4 +1,4 @@
-from jaxtyping import jaxtyped, Int,Float
+from jaxtyping import jaxtyped, Int32,Float32
 from typeguard import typechecked as typechecker
 import numpy as np
 from typing import List, Dict
