@@ -1,4 +1,4 @@
-from jaxtyping import jaxtyped, Int32,Float32
+from jaxtyping import jaxtyped, Int32,Float32, Array
 from typeguard import typechecked as typechecker
 import numpy as np
 from typing import List, Dict
@@ -16,8 +16,8 @@ from .config import WANDB_PROJECT
 @jaxtyped(typechecker=typechecker)
 
 def to_greyscale(
-    c_img: Int32[np.ndarray],  # Input: Integer NumPy array
-) -> Float32[np.ndarray]:      # Output: Float NumPy array
+    c_img: Int32[Array, "height width channels"],  # Input: Integer NumPy array
+) -> Float32[Array, "height width"]:      # Output: Float NumPy array
 
     """Converts numpy array of dimension: 
     (batch_size, height, width, filters), defining an RGB image to a greyscale 
