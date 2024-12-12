@@ -14,9 +14,11 @@ from io import StringIO
 from .config import WANDB_PROJECT
 
 @jaxtyped(typechecker=typechecker)
+
 def to_greyscale(
-    c_img:Int[np.ndarray, "batch_size row_pixels col_pixels filters"]
-    ) -> Float[np.ndarray, "batch_size row_pixels col_pixels"]:
+    c_img: Int32[np.ndarray],  # Input: Integer NumPy array
+) -> Float32[np.ndarray]:      # Output: Float NumPy array
+
     """Converts numpy array of dimension: 
     (batch_size, height, width, filters), defining an RGB image to a greyscale 
     image of dimension: (batch_size, height, width)
@@ -24,7 +26,7 @@ def to_greyscale(
     Returns:
         np.ndarray: Greyscale version of the input image
     """
-    return np.matmul(c_img, [0.2989, 0.5870, 0.1140])
+    return np.matmul(c_img, [0.2989, 0.5870, 0.1140]).astype(np.float32)
 
 def load_all_files(
     h5_dir:str,
