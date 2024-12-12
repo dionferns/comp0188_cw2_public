@@ -48,6 +48,18 @@ def load_all_files(
     all_files = [
         i for i in os.listdir(h5_dir) if re.match(file_pattern,i) is not None
     ]
+
+
+
+
+    print(f"h5_dir: {h5_dir}")
+    all_files = [i for i in os.listdir(h5_dir) if re.match(file_pattern, i) is not None]
+    print(f"all_files: {all_files}")
+
+
+
+
+
     all_arrays = {k:[] for k in keys}
     for f_name in tqdm(all_files):
         with h5py.File(
