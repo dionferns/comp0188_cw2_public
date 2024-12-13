@@ -1,4 +1,4 @@
-from jaxtyping import jaxtyped, Int32,Float32, Array
+from jaxtyping import jaxtyped, Int,Float, Array
 from typeguard import typechecked as typechecker
 import numpy as np
 from typing import List, Dict
@@ -16,8 +16,8 @@ from .config import WANDB_PROJECT
 @jaxtyped(typechecker=typechecker)
 
 def to_greyscale(
-    c_img: Int32[Array, "height_width_channels"],  # Input: Integer NumPy array
-) -> Float32[Array, "height_width"]:      # Output: Float NumPy array
+    c_img: Int[Array, "batch_size height width channels"],  # Input: Integer NumPy array
+) -> Float[Array, "batch_size height width"]:      # Output: Float NumPy array
 
     """Converts numpy array of dimension: 
     (batch_size, height, width, filters), defining an RGB image to a greyscale 
@@ -48,17 +48,6 @@ def load_all_files(
     all_files = [
         i for i in os.listdir(h5_dir) if re.match(file_pattern,i) is not None
     ]
-
-
-
-
-    print(f"h5_dir: {h5_dir}")
-    all_files = [i for i in os.listdir(h5_dir) if re.match(file_pattern, i) is not None]
-    print(f"all_files: {all_files}")
-
-
-
-
 
     all_arrays = {k:[] for k in keys}
     for f_name in tqdm(all_files):
