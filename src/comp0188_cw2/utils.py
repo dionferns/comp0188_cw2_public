@@ -16,8 +16,8 @@ from .config import WANDB_PROJECT
 @jaxtyped(typechecker=typechecker)
 
 def to_greyscale(
-    c_img: Int[Array, "batchsize height width channels"],  # Input: Integer NumPy array
-) -> Float[Array, "batchsize height width"]:      # Output: Float NumPy array
+    c_img: Int[Array, "batchsize_height_width_channels"],  # Input: Integer NumPy array
+) -> Float[Array, "batchsize_height_width"]:      # Output: Float NumPy array
 
     """Converts numpy array of dimension: 
     (batch_size, height, width, filters), defining an RGB image to a greyscale 
