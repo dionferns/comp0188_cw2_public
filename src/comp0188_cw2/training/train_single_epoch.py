@@ -61,20 +61,13 @@ class TrainSingleEpoch:
 	#Change 1
         losses = torch.tensor(0.0)
         denom = torch.tensor(0.0)
-       
-	if gpu:
+        if gpu:
             _device = "cuda"
         else:
             _device = "cpu"
-            
-
-
-	#Change 2.
+        #Change 2.
         losses = losses.to(_device)
         denom = denom.to(_device)
-
-
-
         if self.half_precision:
             losses = losses.half()
             denom = denom.half()
