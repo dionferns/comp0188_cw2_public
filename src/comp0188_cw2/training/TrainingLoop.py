@@ -136,9 +136,6 @@ def train(
                             "value":epoch_val_loss}
         })
 
-        if scheduler:
-            scheduler.step()
-
         chkp_pth = os.path.join(save_dir, "mdl_chkpnt_epoch_{}.pt".format(
             epoch))
         torch.save(
