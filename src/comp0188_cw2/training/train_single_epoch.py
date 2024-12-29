@@ -117,7 +117,7 @@ class TrainSingleEpoch:
             
 
 	    #change 3.
-	    losses += train_loss.detach().to(_device)
+            losses += train_loss.detach().to(_device)
 
             denom += 1
             # losses.update(train_loss.data[0], g.size(0))
