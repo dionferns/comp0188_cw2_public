@@ -126,6 +126,8 @@ def train(
         #change made here.
         if sheduler():
              scheduler.step()
+             current_lr = scheduler.get_last_lr()[0]
+             logger.info(f"Epoch {epoch}, Current Learning Rate: {current_lr}")
 
         mo.update_metrics(metric_value_dict={
             "epoch_train_loss":{"label":"epoch_{}".format(epoch),
