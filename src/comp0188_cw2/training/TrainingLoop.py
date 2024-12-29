@@ -115,8 +115,8 @@ def train(
         val_loss_val, val_preds = val_epoch_func(
             model=model, data_loader=val_data_loader, gpu=gpu,
             criterion=val_criterion)
-
-        epoch_val_loss = val_loss_val.numpy()
+        #change made here(added the detatch and cpu.
+        epoch_val_loss = val_loss_val.detach().cpu().numpy()
         logger.info("Running validation")
         logger.info("epoch {}\t validation loss : {} ".format(
                 epoch, epoch_val_loss))
