@@ -107,7 +107,8 @@ def train(
         train_loss_val, train_preds =  train_epoch_func(
             model=model, data_loader=train_data_loader, gpu=gpu,
             optimizer=optimizer, criterion=criterion,logger=logger)
-        epoch_train_loss = train_loss_val.numpy()
+        epoch_train_loss = train_loss_val.cpu().numpy()
+        #code above changed as .cpu() was added.
 
         logger.info("epoch {}\t training loss : {}".format(
                 epoch, epoch_train_loss))
