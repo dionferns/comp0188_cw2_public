@@ -121,6 +121,12 @@ def train(
         logger.info("epoch {}\t validation loss : {} ".format(
                 epoch, epoch_val_loss))
 
+
+
+        #change made here.
+        if sheduler():
+             scheduler.step()
+
         mo.update_metrics(metric_value_dict={
             "epoch_train_loss":{"label":"epoch_{}".format(epoch),
                                 "value":epoch_train_loss},
