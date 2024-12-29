@@ -48,14 +48,18 @@ class ValidateSingleEpoch:
             final loss for the epoch and a dictionary of predictions. The keys 
             will be the same keys required by the criterion. 
         """
-
-        losses = torch.tensor(0)
-        denom = torch.tensor(0)
+        #change 1(switched from 0 to 0.0)
+        losses = torch.tensor(0.0)
+        denom = torch.tensor(0.0)
         if gpu:
             _device = "cuda"
         else:
             _device = "cpu"
-            
+
+        #change 2().
+        losses = losses.to(_device)
+        denom = denom.to(_device)
+
         if self.half_precision:
             losses = losses.half()
             denom = denom.half()
@@ -91,7 +95,9 @@ class ValidateSingleEpoch:
 
                 # Logs
                 val_loss = criterion(output, output_vals)
-                losses += val_loss.detach().cpu()
+                #change 3.
+                losses += val_loss.detach().to(_device).float()  # Match type and device
+                #change 4.
                 denom += 1
                 if self.cache_preds:
                     preds.append({k:output[k].detach().cpu() for k in output.keys()})
