@@ -124,7 +124,7 @@ def train(
 
 
         #change made here.
-        if sheduler():
+        if scheduler():
              scheduler.step()
              current_lr = scheduler.get_last_lr()[0]
              logger.info(f"Epoch {epoch}, Current Learning Rate: {current_lr}")
