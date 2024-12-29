@@ -62,7 +62,7 @@ class TrainSingleEpoch:
         losses = torch.tensor(0.0)
         denom = torch.tensor(0.0)
        
-	 if gpu:
+	if gpu:
             _device = "cuda"
         else:
             _device = "cpu"
