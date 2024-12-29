@@ -57,13 +57,24 @@ class TrainSingleEpoch:
             final loss for the epoch and a dictionary of predictions. The keys 
             will be the same keys required by the criterion. 
         """
-        losses = torch.tensor(0)
-        denom = torch.tensor(0)
-        if gpu:
+
+	#Change 1
+        losses = torch.tensor(0.0)
+        denom = torch.tensor(0.0)
+       
+	 if gpu:
             _device = "cuda"
         else:
             _device = "cpu"
             
+
+
+	#Change 2.
+        losses = losses.to(_device)
+        denom = denom.to(_device)
+
+
+
         if self.half_precision:
             losses = losses.half()
             denom = denom.half()
@@ -103,7 +114,11 @@ class TrainSingleEpoch:
                 train_loss = criterion(output, output_vals)
             if self.cache_preds:
                 preds.append({k:output[k].detach().cpu() for k in output.keys()})
-            losses += train_loss.detach().cpu()
+            
+
+	    #change 3.
+	    losses += train_loss.detach().to(_device)
+
             denom += 1
             # losses.update(train_loss.data[0], g.size(0))
             # error_ratio.update(evaluation(output, target).data[0], g.size(0))
