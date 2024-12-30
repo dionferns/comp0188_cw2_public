@@ -121,17 +121,6 @@ def train(
         logger.info("epoch {}\t validation loss : {} ".format(
                 epoch, epoch_val_loss))
 
-
-
-        #change made here.
-        if scheduler:
-             scheduler.step()
-             current_lr = scheduler.get_last_lr()[0]
-             logger.info(f"Epoch {epoch}, Current Learning Rate: {current_lr}")
-        else:
-             logger.info("Scheduler is None or not initialized.")
-
-
         mo.update_metrics(metric_value_dict={
             "epoch_train_loss":{"label":"epoch_{}".format(epoch),
                                 "value":epoch_train_loss},
@@ -148,6 +137,16 @@ def train(
                 'optimizer_state_dict': optimizer.state_dict(),
                 'loss': epoch_train_loss,
             }, chkp_pth)
+
+
+        #change made here.
+        if scheduler:
+             scheduler.step()
+             current_lr = scheduler.get_last_lr()[0]
+             logger.info(f"Epoch {epoch}, Current Learning Rate: {current_lr}")
+        else:
+             logger.info("Scheduler is None or not initialized.")
+
 
         if preds_save_type is not None:
             if preds_save_type == "pickle":
