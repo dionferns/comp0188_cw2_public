@@ -106,12 +106,12 @@ class TrainSingleEpoch:
                         #changes made here.
                         #train_loss = criterion(output, output_vals)
                         # Separate losses for pos and grp
-                        pos_loss = criterion.loss_lkp["pos"](output["pos"], output_vals["pos"])  # Added
-                        grp_loss = criterion.loss_lkp["grp"](output["grp"], output_vals["grp"])  # Adde
+                        #pos_loss = criterion.loss_lkp["pos"](output["pos"], output_vals["pos"])  # Added
+                        #grp_loss = criterion.loss_lkp["grp"](output["grp"], output_vals["grp"])  # Adde
                     
                         # Combine losses using weights
-                        alpha = 1.0    #(1.0 + pos_loss.item()) Weight for pos_loss
-                        beta = 5.0 #(1.0 + grp_loss.item()) Weight for grp_loss
+                        #alpha = 1.0    #(1.0 + pos_loss.item()) Weight for pos_loss
+                        #beta = 5.0 #(1.0 + grp_loss.item()) Weight for grp_loss
                         train_loss = alpha * pos_loss + beta * grp_loss  # Weighted loss added here
 
 
@@ -123,14 +123,14 @@ class TrainSingleEpoch:
 
                 #chagnes made here.
                 # Separate losses for pos and grp
-                pos_loss = criterion.loss_lkp["pos"](output["pos"], output_vals["pos"])  # Added
-                grp_loss = criterion.loss_lkp["grp"](output["grp"], output_vals["grp"])  # Added
+                #pos_loss = criterion.loss_lkp["pos"](output["pos"], output_vals["pos"])  # Added
+                #grp_loss = criterion.loss_lkp["grp"](output["grp"], output_vals["grp"])  # Added
 
                 # Combine losses using weights
-                alpha = 1.0 #(1.0 + pos_loss.item()) Weight for pos_loss
-                beta = 5.0 #(1.0 + grp_loss.item()) Weight for grp_loss
-                train_loss = alpha * pos_loss + beta * grp_loss  # Weighted loss added here
-                #train_loss = criterion(output, output_vals)
+                #alpha = 1.0 #(1.0 + pos_loss.item()) Weight for pos_loss
+                #beta = 5.0 #(1.0 + grp_loss.item()) Weight for grp_loss
+                #train_loss = alpha * pos_loss + beta * grp_loss  # Weighted loss added here
+                train_loss = criterion(output, output_vals)
             if self.cache_preds:
                 preds.append({k:output[k].detach().cpu() for k in output.keys()})
             
