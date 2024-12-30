@@ -110,8 +110,8 @@ class TrainSingleEpoch:
                         grp_loss = criterion.loss_lkp["grp"](output["grp"], output_vals["grp"])  # Adde
                     
                         # Combine losses using weights
-                        alpha = 1.0  # Weight for pos_loss
-                        beta = 2.0   # Weight for grp_loss
+                        alpha = 1.0/(1.0 + pos_loss.item())  # Weight for pos_loss
+                        beta = 1.0/ (1.0 + grp_loss.item())   # Weight for grp_loss
                         train_loss = alpha * pos_loss + beta * grp_loss  # Weighted loss added here
 
 
@@ -127,8 +127,8 @@ class TrainSingleEpoch:
                 grp_loss = criterion.loss_lkp["grp"](output["grp"], output_vals["grp"])  # Added
 
                 # Combine losses using weights
-                alpha = 1.0  # Weight for pos_loss
-                beta = 2.0   # Weight for grp_loss
+                alpha = 1.0 / (1.0 + pos_loss.item())  # Weight for pos_loss
+                beta = 1.0/(1.0 + grp_loss.item())   # Weight for grp_loss
                 train_loss = alpha * pos_loss + beta * grp_loss  # Weighted loss added here
                 #train_loss = criterion(output, output_vals)
             if self.cache_preds:
