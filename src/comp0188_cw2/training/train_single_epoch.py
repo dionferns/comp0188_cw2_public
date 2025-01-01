@@ -95,7 +95,7 @@ class TrainSingleEpoch:
                 output_vals = {val:Variable(output_vals[val])
                             for val in output_vals}
             
-            output_vals["grp"] = output_vals["grp"].argmax(dim=1)
+            #output_vals["grp"] = output_vals["grp"].argmax(dim=1)
             optimizer.zero_grad()
 
             # Compute output
