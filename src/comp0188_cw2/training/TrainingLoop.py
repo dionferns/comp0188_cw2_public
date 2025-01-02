@@ -53,6 +53,7 @@ def compute_epoch_metrics(model, data_loader, device, half_precision):
     recall = recall_score(all_targets, all_predictions, average="weighted", zero_division=0)
     f1 = f1_score(all_targets, all_predictions, average="weighted", zero_division=0)
 
+    return accuracy, precision, recall, f1  # Added the return statement here
 
 
 
