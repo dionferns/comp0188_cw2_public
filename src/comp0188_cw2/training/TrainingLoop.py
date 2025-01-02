@@ -73,6 +73,7 @@ def train(
     mo: WandBMetricOrchestrator = WandBMetricOrchestrator(),
     val_criterion:Optional[CriterionProtocol] = None,
     preds_save_type:Optional[Literal["pickle","csv"]] = None,
+    half_precision: bool = False  # Add half_precision parameter
     output_dir:Optional[str] = None
     ) -> Tuple[WandBMetricOrchestrator,int]:
     """Function to run training and validation specified by the objects 
@@ -396,6 +397,8 @@ class TorchTrainingLoop:
           ),
         preds_save_type = self.preds_save_type,
         output_dir=self.output_dir
+        half_precision=self.half_precision  # Pass half_precision here
+
       )
       chckpnt_files = [f for f in os.listdir(chkpnt_dh.loc) if f[-3:]==".pt"]
       for i in chckpnt_files:
