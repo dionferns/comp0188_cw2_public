@@ -18,6 +18,39 @@ from ..models.base import BaseModel
 from .train_single_epoch import TrainSingleEpoch
 from .validate_single_epoch import ValidateSingleEpoch
 
+
+
+
+# Function to compute metrics at the epoch level
+def compute_epoch_metrics(model, data_loader, device, half_precision):
+    """Compute accuracy, precision, recall, and F1 score for grip classification."""
+    all_predictions = []
+    all_targets = []
+    model.eval()  # Set the model to evaluation mode
+    with torch.no_grad():
+        for batch in data_loader:
+            # Move data to the device
+            images = batch.input["images"].to(device)
+            obs = batch.input["obs"].to(device)
+            targets = batch.output["grp"].to(device)
+            # Apply half-precision if enabled
+            images = images.half() if half_precision else images.float()
+            # Get predictions
+            predictions = model(images, obs)
+            pred_classes = torch.argmax(predictions["grp"], dim=1).cpu().numpy()
+            true_classes = torch.argmax(targets, dim=1).cpu().numpy()
+            # Store predictions and true labels
+            all_predictions.extend(pred_classes)
+            all_targets.extend(true_classes)
+    # Compute metrics for the entire epoch
+    accuracy = accuracy_score(all_targets, all_predictions)
+    precision = precision_score(all_targets, all_predictions, average="weighted", zero_division=0)
+    recall = recall_score(all_targets, all_predictions, average="weighted", zero_division=0)
+    f1 = f1_score(all_targets, all_predictions, average="weighted", zero_division=0)
+
+
+
+
 def train(
     model:torch.nn.Module,
     train_data_loader:DataLoader,
