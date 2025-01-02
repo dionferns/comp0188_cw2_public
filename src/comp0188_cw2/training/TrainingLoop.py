@@ -18,6 +18,11 @@ from ..models.base import BaseModel
 from .train_single_epoch import TrainSingleEpoch
 from .validate_single_epoch import ValidateSingleEpoch
 
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import time
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Detect device
+
 
 
 
