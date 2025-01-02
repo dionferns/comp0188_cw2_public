@@ -142,14 +142,30 @@ def train(
             optimizer=optimizer, criterion=criterion,logger=logger)
         epoch_train_loss = train_loss_val.cpu().numpy()
         #code above changed as .cpu() was added.
-
-        logger.info("epoch {}\t training loss : {}".format(
-                epoch, epoch_train_loss))
+        #changes made here.
+        train_accuracy, train_precision, train_recall, train_f1 = compute_epoch_metrics(
+            model, train_data_loader, device, half_precision
+        )
+        
+        logger.info(
+            f"Epoch {epoch}\t Training Loss: {epoch_train_loss}\t"
+            f"Accuracy: {train_accuracy:.4f}\t Precision: {train_precision:.4f}\t"
+            f"Recall: {train_recall:.4f}\t F1: {train_f1:.4f}"
+        )
+        
+        #)logger.info("epoch {}\t training loss : {}".format(
+                #epoch, epoch_train_loss))
         val_loss_val, val_preds = val_epoch_func(
             model=model, data_loader=val_data_loader, gpu=gpu,
             criterion=val_criterion)
         #change made here(added the detatch and cpu.
         epoch_val_loss = val_loss_val.detach().cpu().numpy()
+
+
+
+
+
+
     
 
 
