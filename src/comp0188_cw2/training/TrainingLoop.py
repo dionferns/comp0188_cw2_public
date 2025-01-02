@@ -73,7 +73,7 @@ def train(
     mo: WandBMetricOrchestrator = WandBMetricOrchestrator(),
     val_criterion:Optional[CriterionProtocol] = None,
     preds_save_type:Optional[Literal["pickle","csv"]] = None,
-    half_precision: bool = False  # Add half_precision parameter
+    half_precision: bool = False,  # Add half_precision parameter
     output_dir:Optional[str] = None
     ) -> Tuple[WandBMetricOrchestrator,int]:
     """Function to run training and validation specified by the objects 
