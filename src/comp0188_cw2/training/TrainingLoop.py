@@ -117,16 +117,48 @@ def train(
             criterion=val_criterion)
         #change made here(added the detatch and cpu.
         epoch_val_loss = val_loss_val.detach().cpu().numpy()
-        logger.info("Running validation")
-        logger.info("epoch {}\t validation loss : {} ".format(
-                epoch, epoch_val_loss))
+    
 
-        mo.update_metrics(metric_value_dict={
-            "epoch_train_loss":{"label":"epoch_{}".format(epoch),
-                                "value":epoch_train_loss},
-            "epoch_val_loss":{"label":"epoch_{}".format(epoch),
-                            "value":epoch_val_loss}
-        })
+
+
+
+
+        #logger.info("Running validation")
+        #logger.info("epoch {}\t validation loss : {} ".format(
+                #epoch, epoch_val_loss))
+
+        #mo.update_metrics(metric_value_dict={
+            #"epoch_train_loss":{"label":"epoch_{}".format(epoch),
+                                #"value":epoch_train_loss},
+            #"epoch_val_loss":{"label":"epoch_{}".format(epoch),
+                            #"value":epoch_val_loss}
+        #})
+
+
+        #changes made here.
+        # Compute validation metrics
+        val_accuracy, val_precision, val_recall, val_f1 = compute_epoch_metrics(model, val_data_loader, device, half_precision)
+        logger.info(
+            f"Epoch {epoch}\t Validation Loss: {epoch_val_loss}\t"
+            f"Accuracy: {val_accuracy:.4f}\t Precision: {val_precision:.4f}\t"
+            f"Recall: {val_recall:.4f}\t F1: {val_f1:.4f}"
+        )
+        # Log metrics to WandB
+        mo.update_metrics(
+            metric_value_dict={
+                "epoch_train_loss": {"label": f"epoch_{epoch}", "value": epoch_train_loss},
+                "epoch_val_loss": {"label": f"epoch_{epoch}", "value": epoch_val_loss},
+                "train_accuracy": {"label": f"epoch_{epoch}", "value": train_accuracy},
+                "train_precision": {"label": f"epoch_{epoch}", "value": train_precision},
+                "train_recall": {"label": f"epoch_{epoch}", "value": train_recall},
+                "train_f1": {"label": f"epoch_{epoch}", "value": train_f1},
+                "val_accuracy": {"label": f"epoch_{epoch}", "value": val_accuracy},
+                "val_precision": {"label": f"epoch_{epoch}", "value": val_precision},
+                "val_recall": {"label": f"epoch_{epoch}", "value": val_recall},
+                "val_f1": {"label": f"epoch_{epoch}", "value": val_f1},
+            }
+        )
+
 
         chkp_pth = os.path.join(save_dir, "mdl_chkpnt_epoch_{}.pt".format(
             epoch))
