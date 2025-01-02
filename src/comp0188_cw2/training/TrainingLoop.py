@@ -396,7 +396,7 @@ class TorchTrainingLoop:
           cache_preds=self.cache_preds
           ),
         preds_save_type = self.preds_save_type,
-        output_dir=self.output_dir
+        output_dir=self.output_dir,
         half_precision=self.half_precision  # Pass half_precision here
 
       )
