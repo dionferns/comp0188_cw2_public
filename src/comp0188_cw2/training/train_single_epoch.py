@@ -152,7 +152,7 @@ class TrainSingleEpoch:
 
                 #change made here.
                 if self.enable_grad_clipping:
-                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=8.0)
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=4.0)
 
                 optimizer.step()
             except RuntimeError as e:
