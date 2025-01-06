@@ -398,7 +398,6 @@ class TorchTrainingLoop:
         val_epoch_func = ValidateSingleEpoch(
           half_precision=self.half_precision,
           cache_preds=self.cache_preds,
-          enable_grad_clipping=self.enable_grad_clipping
           ),
         preds_save_type = self.preds_save_type,
         output_dir=self.output_dir,
