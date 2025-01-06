@@ -16,6 +16,7 @@ class TrainSingleEpoch:
         self, 
         half_precision:bool=False,
         cache_preds:bool=True
+        enable_grad_clipping: bool = False  # Default value set to False
         ) -> None:
         """Class which runs a single epoch of training.
 
@@ -27,6 +28,7 @@ class TrainSingleEpoch:
         """
         self.half_precision = half_precision
         self.cache_preds = cache_preds
+        self.enable_grad_clipping = enable_grad_clipping  # Store the new parameter
         
     def __call__(
         self,
@@ -149,7 +151,8 @@ class TrainSingleEpoch:
                 
 
                 #change made here.
-                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=4.0)
+                if self.enable_grad_clipping:
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=4.0)
 
                 optimizer.step()
             except RuntimeError as e:
