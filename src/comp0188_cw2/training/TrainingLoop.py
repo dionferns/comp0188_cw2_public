@@ -392,7 +392,7 @@ class TorchTrainingLoop:
         val_criterion = self.val_criterion,
         train_epoch_func = TrainSingleEpoch(
           half_precision=self.half_precision,
-          enable_grad_clipping=self.enable_grad_clipping
+          enable_grad_clipping=self.enable_grad_clipping,
           cache_preds=self.cache_preds
           ),
         val_epoch_func = ValidateSingleEpoch(
