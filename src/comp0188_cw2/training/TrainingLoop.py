@@ -296,6 +296,7 @@ class TorchTrainingLoop:
         val_criterion:CriterionProtocol = None,
         preds_save_type:Optional[Literal["pkl","csv"]] = None,
         half_precision:bool=False,
+        enable_grad_clipping: bool = False,
         output_dir:Optional[str] = None
       ):
       """Class to orchestrate training and validating a model. CriterionProtocol
@@ -336,6 +337,7 @@ class TorchTrainingLoop:
       self.mo = mo
       self.val_criterion = val_criterion
       self.gpu = False
+      self.enable_grad_clipping = enable_grad_clipping
       self.preds_save_type = preds_save_type
       self.half_precision = half_precision
       self.output_dir = output_dir
@@ -390,6 +392,7 @@ class TorchTrainingLoop:
         val_criterion = self.val_criterion,
         train_epoch_func = TrainSingleEpoch(
           half_precision=self.half_precision,
+          enable_grad_clipping=self.enable_grad_clipping
           cache_preds=self.cache_preds
           ),
         val_epoch_func = ValidateSingleEpoch(
