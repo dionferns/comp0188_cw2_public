@@ -15,7 +15,7 @@ class TrainSingleEpoch:
     def __init__(
         self, 
         half_precision:bool=False,
-        cache_preds:bool=True
+        cache_preds:bool=True,
         enable_grad_clipping: bool = False  # Default value set to False
         ) -> None:
         """Class which runs a single epoch of training.
