@@ -398,12 +398,11 @@ class TorchTrainingLoop:
         val_epoch_func = ValidateSingleEpoch(
           half_precision=self.half_precision,
           cache_preds=self.cache_preds,
-          
+          enable_grad_clipping=self.enable_grad_clipping
           ),
         preds_save_type = self.preds_save_type,
         output_dir=self.output_dir,
         half_precision=self.half_precision  # Pass half_precision here
-        enable_grad_clipping=self.enable_grad_clipping
       )
       chckpnt_files = [f for f in os.listdir(chkpnt_dh.loc) if f[-3:]==".pt"]
       for i in chckpnt_files:
